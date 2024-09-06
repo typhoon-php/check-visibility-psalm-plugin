@@ -1,6 +1,6 @@
 {
     "name": "typhoon/check-visibility-psalm-plugin",
-    "description": "Ensures classes and functions have either an @api or an @internal annotation",
+    "description": "Ensures classes and functions have @api or @internal annotation",
     "license": "MIT",
     "type": "psalm-plugin",
     "authors": [
