@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Typhoon\Tools\Psalm;
+namespace Typhoon\CheckVisibilityPsalmPlugin;
 
 use PhpParser\Node\Stmt\Function_;
 use Psalm\CodeLocation;
-use Psalm\Issue\PluginIssue;
 use Psalm\IssueBuffer;
 use Psalm\Plugin\EventHandler\AfterClassLikeVisitInterface;
 use Psalm\Plugin\EventHandler\AfterFunctionLikeAnalysisInterface;
@@ -16,9 +15,9 @@ use Psalm\Plugin\PluginEntryPointInterface;
 use Psalm\Plugin\RegistrationInterface;
 
 /**
- * @psalm-suppress UnusedClass
+ * @api
  */
-final class CheckVisibilityPlugin implements PluginEntryPointInterface, AfterClassLikeVisitInterface
+final class CheckVisibilityPlugin implements PluginEntryPointInterface, AfterFunctionLikeAnalysisInterface, AfterClassLikeVisitInterface
 {
     public static function afterClassLikeVisit(AfterClassLikeVisitEvent $event): void
     {
@@ -32,15 +31,6 @@ final class CheckVisibilityPlugin implements PluginEntryPointInterface, AfterCla
         }
     }
 
-    public function __invoke(RegistrationInterface $registration, ?\SimpleXMLElement $config = null): void
-    {
-        $registration->registerHooksFromClass(self::class);
-        $registration->registerHooksFromClass(CheckFunctionVisibility::class);
-    }
-}
-
-final class CheckFunctionVisibility implements AfterFunctionLikeAnalysisInterface
-{
     public static function afterStatementAnalysis(AfterFunctionLikeAnalysisEvent $event): ?bool
     {
         $function = $event->getFunctionlikeStorage();
@@ -57,12 +47,10 @@ final class CheckFunctionVisibility implements AfterFunctionLikeAnalysisInterfac
 
         return null;
     }
-}
 
-final class UnspecifiedVisibility extends PluginIssue
-{
-    public function __construct(string $name, CodeLocation $code_location)
+    public function __invoke(RegistrationInterface $registration, ?\SimpleXMLElement $config = null): void
     {
-        parent::__construct(\sprintf('%s must be either @api or @internal', $name), $code_location);
+        $registration->registerHooksFromClass(self::class);
+        require_once __DIR__ . '/UnspecifiedVisibility.php';
     }
 }
