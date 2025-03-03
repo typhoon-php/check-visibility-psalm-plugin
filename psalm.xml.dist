@@ -39,32 +39,6 @@
     </ignoreExceptions>
 
     <issueHandlers>
-        <PluginIssue name="UnspecifiedVisibility">
-            <errorLevel type="suppress">
-                <directory name="tests"/>
-            </errorLevel>
-        </PluginIssue>
-        <MissingThrowsDocblock>
-            <errorLevel type="suppress">
-                <directory name="tests"/>
-            </errorLevel>
-        </MissingThrowsDocblock>
-        <MixedAssignment errorLevel="suppress"/>
-        <PossiblyUnusedMethod>
-            <errorLevel type="suppress">
-                <directory name="tests"/>
-            </errorLevel>
-        </PossiblyUnusedMethod>
-        <RedundantCondition>
-            <errorLevel type="suppress">
-                <directory name="tests"/>
-            </errorLevel>
-        </RedundantCondition>
-        <RedundantConditionGivenDocblockType>
-            <errorLevel type="suppress">
-                <directory name="tests"/>
-            </errorLevel>
-        </RedundantConditionGivenDocblockType>
         <UnusedConstructor errorLevel="suppress"/>
     </issueHandlers>
 
